@@ -22,6 +22,27 @@
 
     <!-- FONTS GOOGGLE -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .navbar.active {
+            background-color: #3ABAF4;
+            box-shadow: rgba(103, 119, 239, 0.2) rgba(0, 0, 0, 0.03);
+        }
+
+        .navbar-bg {
+            content: " ";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 115px;
+            background-color: #3ABAF4;
+            z-index: -1;
+        }
+
+        ul.nav-tabs li.nav-item a.nav-link i {
+            color: #3ABAF4;
+        }
+    </style>
 
 </head>
 

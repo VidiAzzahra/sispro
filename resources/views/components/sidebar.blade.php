@@ -35,7 +35,7 @@
             </li>
         </ul>
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-            <a href="{{ url('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <a href="{{ url('logout') }}" class="btn btn-info btn-lg btn-block btn-icon-split">
                 <i class="fa-solid fa-right-from-bracket"></i>Keluar
             </a>
         </div>
