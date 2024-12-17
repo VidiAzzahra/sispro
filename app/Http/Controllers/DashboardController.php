@@ -8,6 +8,8 @@ use Carbon\Carbon;
 // use App\Models\Kategori;
 // use App\Models\Kunjungan;
 // use App\Models\Peminjaman;
+use App\Models\Produk;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Traits\JsonResponder;
 use Illuminate\Support\Facades\DB;
@@ -77,12 +79,14 @@ class DashboardController extends Controller
         }
 
         // $books = Buku::count();
-        // $category = Kategori::count();
         // $members = Siswa::count();
         // $pengembalian = Peminjaman::where('status', '1')->count();
         // $loans = Peminjaman::where('status', '0')->count();
         // $berkunjung = Kunjungan::count();
 
-        return view('pages.dashboard.index');
+        $kategori = Kategori::count();
+        $produk = Produk::count();
+
+        return view('pages.dashboard.index', compact('kategori','produk'));
     }
 }

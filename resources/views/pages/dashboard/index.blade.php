@@ -15,7 +15,7 @@
                 <h1>Dashboard {{ getGreeting() }}</h1>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-primary">
                             <i class="fas fa-columns"></i>
@@ -25,89 +25,29 @@
                                 <h4>Kategori</h4>
                             </div>
                             <div class="card-body">
-                                1
+                                {{ $kategori }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-danger">
                             <i class="fas fa-book"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Buku</h4>
+                                <h4>Produk</h4>
                             </div>
                             <div class="card-body">
-                                2
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Member</h4>
-                            </div>
-                            <div class="card-body">
-                                3
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Peminjaman</h4>
-                            </div>
-                            <div class="card-body">
-                                4
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Pengembalian</h4>
-                            </div>
-                            <div class="card-body">
-                                5
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Kunjungan</h4>
-                            </div>
-                            <div class="card-body">
-                               6
+                                {{ $produk }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Grafik Pendatang</h4>
@@ -142,44 +82,6 @@
                                 </div>
                             </div>
                             <canvas id="myChart" height="182"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Stok Bulanan</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="bulan_filter" class="form-label">Bulan</label>
-                                        <select name="bulan_filter" id="bulan_filter" class="form-control">
-                                            @foreach (bulan() as $key => $value)
-                                                <option value="{{ $key + 1 }}"
-                                                    {{ $key + 1 == date('m') ? 'selected' : '' }}>
-                                                    {{ $value }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="tahun_filter" class="form-label">Tahun</label>
-                                        <select name="tahun_filter" id="tahun_filter" class="form-control">
-                                            @for ($i = now()->year; $i >= now()->year - 4; $i--)
-                                                <option value="{{ $i }}"
-                                                    {{ $i == date('Y') ? 'selected' : '' }}>
-                                                    {{ $i }}
-                                                </option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <canvas id="myChart2" height="182"></canvas>
                         </div>
                     </div>
                 </div>
