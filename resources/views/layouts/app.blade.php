@@ -42,6 +42,24 @@
         ul.nav-tabs li.nav-item a.nav-link i {
             color: #3ABAF4;
         }
+
+        body.layout-3 .navbar.navbar-secondary .navbar-nav>.nav-item.active>.nav-link {
+            color: #3ABAF4;
+        }
+
+        a {
+            color: #3ABAF4;
+            font-weight: 500;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+        }
+
+        .nav-pills .nav-item .nav-link.active {
+            box-shadow: 0 2px 6px #acb5f6;
+            color: #fff;
+            background-color: #3ABAF4;
+        }
     </style>
 
 </head>
