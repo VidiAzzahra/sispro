@@ -21,10 +21,9 @@
                             Data @yield('title')
                         </div>
                         <div class="ml-auto">
-                            <a href="{{ route('stok.show', 'pdf') }}" class="btn btn-sm px-3 btn-danger mr-1"
-                                target="_blank"><i class="fas fa-file-pdf mr-2"></i>Pdf</a>
-                            <a href="{{ route('stok.show', 'excel') }}" class="btn btn-sm px-3 btn-info" target="_blank"><i
-                                    class="fas fa-file-excel mr-2"></i>Excel</a>
+                            <a href="javascript:void(0)" class="btn btn-sm px-3 btn-danger mr-1" target="_blank" id="pdf-button">
+                                <i class="fas fa-file-pdf mr-2"></i>Pdf
+                            </a>
                             <button class="btn btn-success" onclick="getModal('createModal')"><i
                                     class="fas fa-plus mr-2"></i>Tambah</button>
                         </div>
@@ -152,44 +151,22 @@
             });
         });
 
+        $('#pdf-button').click(function() {
+            // Ambil nilai filter
+            let tahun = $('#filter_tahun').val();
+            let bulan = $('#filter_bulan').val();
+            let tanggal = $('#filter_tanggal').val();
+
+            // Bangun URL dengan parameter
+            let url = '{{ route('stok.show', 'pdf') }}' +
+                `?tahun=${tahun}&bulan=${bulan}&tanggal=${tanggal}`;
+
+            // Buka PDF di tab baru
+            window.open(url, '_blank');
+        });
 
 
         $(document).ready(function() {
-            // datatableCall('tabel-stok', '{{ route('stok.index') }}', [{
-            //         data: 'DT_RowIndex',
-            //         name: 'DT_RowIndex'
-            //     },
-            //     {
-            //         data: 'tanggal',
-            //         name: 'tanggal'
-            //     },
-            //     {
-            //         data: 'produk',
-            //         name: 'produk'
-            //     },
-            //     {
-            //         data: 'tipe',
-            //         name: 'tipe'
-            //     },
-            //     {
-            //         data: 'stok',
-            //         name: 'stok'
-            //     },
-            //     {
-            //         data: 'keterangan',
-            //         name: 'keterangan'
-            //     },
-            //     {
-            //         data: 'action',
-            //         name: 'action'
-            //     },
-            // ]);
-
-            // $('#filter_tahun, #filter_bulan').change(function() {
-            //     const tahun = $('#filter_tahun').val();
-            //     const bulan = $('#filter_bulan').val();
-            //     table.ajax.url(`{{ route('stok.index') }}?tahun=${tahun}&bulan=${bulan}`).load();
-            // });
 
             select2ToJson("#produk_id", "{{ route('produk.index') }}", "#createModal");
 

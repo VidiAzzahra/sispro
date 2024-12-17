@@ -24,22 +24,18 @@
     <table width="100%" border="0" cellpadding="2.5" cellspacing="0">
         <tbody>
             <tr>
-                <td>
-                    {{-- <img width='120px' src="{{ generateBase64Image(public_path('images/logo-pemkot.png')) }}"
-                        alt=""> --}}
+                <td width="17%">
+
                 </td>
-                <td>
-                    <h3>PERPUSTAKAAN SMPN 7 TASIKMALAYA </h3>
-                    <h3>KAMPUS MENGAJAR 7</h3>
-                    <h3>SEKOLAHKU NYAMAN</h3>
+                <td style="text-align: center">
+                    <h3>BANK BJB KCP PEMKOT TASIKMALAYA</h3>
                     <div>
                         <span>
-                            Jl. Letnan Dadi Suryatman No.76 46131 Tasikmalaya Jawa Barat
+                            Jl. Ir. H. Juanda No.88, Panglayungan, Kec. Cipedes, Kab. Tasikmalaya, Jawa Barat 46151
                         </span>
                     </div>
                 </td>
-                {{-- <td width='20%' align="right"><img width='120px'
-                        src="{{ generateBase64Image(public_path('images/logo-psc.png')) }}" alt=""> </td> --}}
+                <td width="17%"></td>
             </tr>
         </tbody>
     </table>
