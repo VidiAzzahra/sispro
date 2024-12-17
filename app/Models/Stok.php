@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Barang;
+use App\Models\Produk;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,39 +20,39 @@ class Stok extends Model
         static::creating(function ($model) {
             $model->uuid = Uuid::uuid4()->toString();
 
-            $barang = Barang::find($model->barang_id);
+            $produk = Produk::find($model->produk_id);
 
             if ($model->tipe === 'masuk') {
-                $barang->stok += $model->stok;
+                $produk->stok += $model->stok;
             } elseif ($model->tipe === 'keluar') {
-                $barang->stok -= $model->stok;
+                $produk->stok -= $model->stok;
             }
 
-            $barang->save();
+            $produk->save();
         });
         static::updating(function ($model) {
 
-            $barang = Barang::find($model->barang_id);
+            $produk = Produk::find($model->produk_id);
 
             if ($model->tipe === 'masuk') {
-                $barang->stok += $model->stok - $model->getOriginal('stok');
+                $produk->stok += $model->stok - $model->getOriginal('stok');
             } elseif ($model->tipe === 'keluar') {
-                $barang->stok -= $model->stok - $model->getOriginal('stok');
+                $produk->stok -= $model->stok - $model->getOriginal('stok');
             }
 
-            $barang->save();
+            $produk->save();
         });
         static::deleting(function ($stok) {
-            $barang = Barang::find($stok->barang_id);
+            $produk = Produk::find($stok->produk_id);
 
-            if ($barang) {
+            if ($produk) {
                 if ($stok->tipe === 'masuk') {
-                    $barang->stok -= $stok->stok;
+                    $produk->stok -= $stok->stok;
                 } elseif ($stok->tipe === 'keluar') {
-                    $barang->stok += $stok->stok;
+                    $produk->stok += $stok->stok;
                 }
 
-                $barang->save();
+                $produk->save();
             }
         });
     }
@@ -62,8 +62,8 @@ class Stok extends Model
         return 'uuid';
     }
 
-    public function barang()
+    public function produk()
     {
-        return $this->belongsTo(Barang::class);
+        return $this->belongsTo(Produk::class);
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kategori extends Model
 {
+    protected $guarded = ['id'];
+
     public static function boot()
     {
         parent::boot();
@@ -26,5 +28,5 @@ class Kategori extends Model
     {
         return $this->hasMany(Barang::class);
     }
-    
+
 }

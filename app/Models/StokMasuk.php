@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Ramsey\Uuid\Uuid;
-use App\Models\Barang;
+use App\Models\Produk;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -25,8 +25,8 @@ class StokMasuk extends Model
         return 'uuid';
     }
 
-    public function barang()
+    public function produk()
     {
-        return $this->belongsTo(Barang::class);
+        return $this->belongsTo(Produk::class);
     }
 }

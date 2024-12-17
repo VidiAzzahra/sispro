@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->date('tanggal');
-            $table->unsignedBigInteger('barang_id');
+            $table->unsignedBigInteger('produk_id');
             $table->bigInteger('stok');
             $table->text('keterangan');
             $table->timestamps();
 
-            $table->foreign('barang_id')->references('id')->on('barangs')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('produks')->onDelete('cascade');
         });
     }
 
