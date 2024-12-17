@@ -6,8 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
 
@@ -42,4 +42,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('produk/detail/{id}', [ProdukController::class, 'detail'])->name('produk.detail');
     Route::resource('produk', ProdukController::class)->names('produk');
     Route::resource('stok', StokController::class)->names('stok');
+    Route::resource('user', UserController::class)->names('user');
+    Route::match(['get', 'put'], 'profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });

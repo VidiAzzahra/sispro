@@ -9,7 +9,7 @@
         <ul class="sidebar-menu">
             {{-- link to dasboard --}}
             <li class="nav-item  {{ Request::is('admin') ? 'active' : '' }}">
-                <a href="{{ url('/admin') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <a href="{{ url('/admin') }}" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
             </li>
             {{-- link to kategori --}}
 
@@ -19,11 +19,19 @@
             </li>
             {{-- link to produk --}}
             <li class="nav-item {{ Request::is('admin/produk') || Request::is('admin/produk/*') ? 'active' : '' }}">
-                <a href="{{ url('admin/produk') }}" class="nav-link"><i class="fas fa-book"></i> <span>Produk</span></a>
+                <a href="{{ url('admin/produk') }}" class="nav-link"><i class="far fa-credit-card"></i> <span>Produk</span></a>
             </li>
             {{-- link to stok --}}
             <li class="nav-item {{ Request::is('admin/stok') || Request::is('admin/stok/*') ? 'active' : '' }}">
-                <a href="{{ url('admin/stok') }}" class="nav-link"><i class="fas fa-book"></i> <span>Stok</span></a>
+                <a href="{{ url('admin/stok') }}" class="nav-link"><i class="fas fa-up-down"></i> <span>Stok</span></a>
+            </li>
+            {{-- link to profile --}}
+            <li class="nav-item {{ Request::is('admin/profile') || Request::is('admin/profile/*') ? 'active' : '' }}">
+                <a href="{{ url('admin/profile') }}" class="nav-link"><i class="fas fa-user"></i> <span>Profile</span></a>
+            </li>
+            {{-- link to user --}}
+            <li class="nav-item {{ Request::is('admin/user') || Request::is('admin/user/*') ? 'active' : '' }}">
+                <a href="{{ url('admin/user') }}" class="nav-link"><i class="fas fa-users"></i> <span>User</span></a>
             </li>
         </ul>
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">

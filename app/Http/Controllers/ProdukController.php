@@ -24,7 +24,7 @@ class ProdukController extends Controller
             if ($request->mode == "datatable") {
                 return DataTables::of($produks)
                     ->addColumn('action', function ($produk) {
-                        $detailButton = '<a href="produk/detail/'.$produk->id.'" class="btn btn-sm btn-info d-inline-flex  align-items-baseline  mr-1" ><i class="fas fa-edit mr-1"></i>Edit</a href="' . route('produk.show', $produk->id) . '">';
+                        $detailButton = '<a href="produk/detail/'.$produk->id.'" class="btn btn-sm btn-info d-inline-flex  align-items-baseline  mr-1" ><i class="far fa-file mr-1"></i>Edit</a href="' . route('produk.show', $produk->id) . '">';
                         $editButton = '<button class="btn btn-sm btn-warning d-inline-flex  align-items-baseline  mr-1" onclick="getModal(`createModal`, `/admin/kategori/' . $produk->id . '`, [`id`, `nama`])"><i class="fas fa-edit mr-1"></i>Edit</button>';
                         $deleteButton = '<button class="btn btn-sm btn-danger d-inline-flex  align-items-baseline " onclick="confirmDelete(`/admin/kategori/' . $produk->id . '`, `category-table`)"><i class="fas fa-trash mr-1"></i>Hapus</button>';
                         return $detailButton . $editButton . $deleteButton;

@@ -33,10 +33,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" width="5%">#</th>
-                                        <th scope="col" width="10%">Gambar</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Role</th>
                                         <th scope="col" width="20%">Aksi</th>
                                     </tr>
                                 </thead>
@@ -69,20 +67,12 @@
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'image',
-                    name: 'image'
-                },
-                {
-                    data: 'nama',
-                    name: 'nama'
+                    data: 'name',
+                    name: 'name'
                 },
                 {
                     data: 'email',
                     name: 'email'
-                },
-                {
-                    data: 'role',
-                    name: 'role'
                 },
                 {
                     data: 'action',
@@ -110,8 +100,7 @@
 
                 const errorCallback = function(error) {
                     setButtonLoadingState("#saveData .btn.btn-success", false);
-                    handleValidationErrors(error, "saveData", ["nama", "role", "email",
-                        "password", "image"
+                    handleValidationErrors(error, "saveData", ["nama", "email", "password"
                     ]);
                 };
 

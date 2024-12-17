@@ -50,7 +50,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Grafik Pendatang</h4>
+                            <h4>Grafik Stok Masuk dan Keluar</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -97,6 +97,7 @@
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/index-0.js') }}"></script>
     <script>
+
         $(document).ready(function() {
             renderData();
 
@@ -107,8 +108,7 @@
 
         const renderData = () => {
             const successCallback = function(response) {
-                createChart(response.data.labels, response.data.berkunjung, response.data.peminjaman, response.data
-                    .pengembalian);
+                createChart(response.data.labels, response.data.stokMasuk, response.data.stokKeluar);
             };
 
             const errorCallback = function(error) {

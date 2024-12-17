@@ -273,7 +273,7 @@ const togglePasswordVisibility = (inputSelector, iconSelector) => {
         toggleIcon.removeClass("fas fa-eye-slash").addClass("fas fa-eye");
     }
 };
-const createChart = (labels, berkunjung, peminjaman, pengembalian) => {
+const createChart = (labels, stokMasuk, stokKeluar) => {
     const statistics_chart = $("#myChart");
 
     if (statistics_chart.data("chart")) {
@@ -288,8 +288,8 @@ const createChart = (labels, berkunjung, peminjaman, pengembalian) => {
             labels: labels,
             datasets: [
                 {
-                    label: "Kunjungan",
-                    data: berkunjung,
+                    label: "Stok Masuk",
+                    data: stokMasuk,
                     borderWidth: 5,
                     borderColor: "#47c363",
                     backgroundColor: "rgba(71, 195, 99, 0.3)",
@@ -298,23 +298,13 @@ const createChart = (labels, berkunjung, peminjaman, pengembalian) => {
                     pointRadius: 4,
                 },
                 {
-                    label: "Peminjaman Buku",
-                    data: peminjaman,
+                    label: "Stok Keluar",
+                    data: stokKeluar,
                     borderWidth: 5,
                     borderColor: "#ffa426",
                     backgroundColor: "rgba(255, 164, 38, 0.3)",
                     pointBackgroundColor: "#fff",
                     pointBorderColor: "#ffa426",
-                    pointRadius: 4,
-                },
-                {
-                    label: "Pengembalian Buku",
-                    data: pengembalian,
-                    borderWidth: 5,
-                    borderColor: "#fc544b",
-                    backgroundColor: "rgba(252, 84, 75, 0.3)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderColor: "#fc544b",
                     pointRadius: 4,
                 },
             ],

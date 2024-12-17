@@ -15,6 +15,16 @@ var myChart = new Chart(statistics_chart, {
       pointBackgroundColor: '#fff',
       pointBorderColor: '#6777ef',
       pointRadius: 4
+    },
+    {
+      label: 'Statistics',
+      data: [270, 488, 430, 302, 530, 387, 640],
+      borderWidth: 5,
+      borderColor: '#f35454',
+      backgroundColor: 'transparent',
+      pointBackgroundColor: '#fff',
+      pointBorderColor: '#f35454',
+      pointRadius: 4
     }]
   },
   options: {

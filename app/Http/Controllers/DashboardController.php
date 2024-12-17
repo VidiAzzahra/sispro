@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-// use App\Models\Buku;
-// use App\Models\Siswa;
-// use App\Models\Kategori;
-// use App\Models\Kunjungan;
-// use App\Models\Peminjaman;
-use App\Models\Produk;
 use App\Models\Kategori;
-use Illuminate\Http\Request;
+use App\Models\Produk;
+use App\Models\Stok;
 use App\Traits\JsonResponder;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -26,67 +22,53 @@ class DashboardController extends Controller
             $startDate = Carbon::create($tahun, $bulan, 1)->startOfMonth();
             $endDate = Carbon::create($tahun, $bulan, 1)->endOfMonth();
 
-            // $berkunjungData = Kunjungan::whereBetween('tanggal', [$startDate, $endDate])
-            //     ->groupBy('date')
-            //     ->orderBy('date')
-            //     ->get([
-            //         DB::raw('DATE(tanggal) as date'),
-            //         DB::raw('COUNT(*) as count'),
-            //     ])
-            //     ->pluck('count', 'date');
+            $dataStokMasuk = Stok::where('tipe', 'masuk')
+                ->whereBetween('tanggal', [$startDate, $endDate])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get([
+                    DB::raw('DATE(tanggal) as date'),
+                    DB::raw('SUM(stok) as total_stok'),
+                ])
+                ->mapWithKeys(function ($item) {
+                    return [$item->date => $item->total_stok];
+                })->toArray();
 
-            // $peminjamanData = Peminjaman::where('status', '0')
-            //     ->whereBetween('tanggal_mulai', [$startDate, $endDate])
-            //     ->groupBy('date')
-            //     ->orderBy('date')
-            //     ->get([
-            //         DB::raw('DATE(tanggal_mulai) as date'),
-            //         DB::raw('COUNT(*) as count'),
-            //     ])
-            //     ->pluck('count', 'date');
+            $dataStokKeluar = Stok::where('tipe', 'keluar')
+                ->whereBetween('tanggal', [$startDate, $endDate])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get([
+                    DB::raw('DATE(tanggal) as date'),
+                    DB::raw('SUM(stok) as total_stok'),
+                ])
+                ->mapWithKeys(function ($item) {
+                    return [$item->date => $item->total_stok];
+                })->toArray();
 
-            // $pengembalianData = Peminjaman::where('status', '1')
-            //     ->whereBetween('tanggal_kembali', [$startDate, $endDate])
-            //     ->groupBy('date')
-            //     ->orderBy('date')
-            //     ->get([
-            //         DB::raw('DATE(tanggal_kembali) as date'),
-            //         DB::raw('COUNT(*) as count'),
-            //     ])
-            //     ->pluck('count', 'date');
+            $labels = [];
+            $stokMasuk = [];
+            $stokKeluar = [];
 
-            // $labels = [];
-            // $berkunjung = [];
-            // $peminjaman = [];
-            // $pengembalian = [];
+            $dates = $startDate->copy();
+            while ($dates <= $endDate) {
+                $dateString = $dates->toDateString();
+                $labels[] = formatTanggal($dateString, 'd'); // Format tanggal (misalnya '01', '02')
+                $stokMasuk[] = $dataStokMasuk[$dateString] ?? 0;
+                $stokKeluar[] = $dataStokKeluar[$dateString] ?? 0;
+                $dates->addDay();
+            }
 
-            // $dates = $startDate->copy();
-            // while ($dates <= $endDate) {
-            //     $dateString = $dates->toDateString();
-            //     $labels[] = formatTanggal($dateString, 'd');
-            //     $berkunjung[] = $berkunjungData[$dateString] ?? 0;
-            //     $peminjaman[] = $peminjamanData[$dateString] ?? 0;
-            //     $pengembalian[] = $pengembalianData[$dateString] ?? 0;
-            //     $dates->addDay();
-            // }
-
-            // return $this->successResponse([
-            //     'labels' => $labels,
-            //     'berkunjung' => $berkunjung,
-            //     'peminjaman' => $peminjaman,
-            //     'pengembalian' => $pengembalian,
-            // ], 'Data Kunjungan, Peminjaman dan Pengembalian ditemukan.');
+            return $this->successResponse([
+                'labels' => $labels,
+                'stokMasuk' => $stokMasuk,
+                'stokKeluar' => $stokKeluar,
+            ], 'Stok masuk dan keluar ditemukan.');
         }
-
-        // $books = Buku::count();
-        // $members = Siswa::count();
-        // $pengembalian = Peminjaman::where('status', '1')->count();
-        // $loans = Peminjaman::where('status', '0')->count();
-        // $berkunjung = Kunjungan::count();
 
         $kategori = Kategori::count();
         $produk = Produk::count();
 
-        return view('pages.dashboard.index', compact('kategori','produk'));
+        return view('pages.dashboard.index', compact('kategori', 'produk'));
     }
 }
