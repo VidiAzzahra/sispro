@@ -78,6 +78,11 @@ class StokController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
+        $cekStokProduk = Produk::find($request->produk_id);
+        if ($cekStokProduk->stok < $request->stok) {
+            return $this->errorResponse(null, 'Stok Tidak Cukup!');
+        }
+
         $stok = Stok::create([
             'tanggal' => $request->tanggal,
             'produk_id' => $request->produk_id,
@@ -148,7 +153,6 @@ class StokController extends Controller
             $bulan = $request->input('bulan');
             $tanggal = $request->input('tanggal');
 
-            // Query dengan filter
             $stoks = Stok::with('produk')
                 ->when($tahun, function ($query) use ($tahun) {
                     return $query->whereYear('tanggal', $tahun);
@@ -162,8 +166,8 @@ class StokController extends Controller
                 ->get()
                 ->map(function ($stok) {
                     $stok->formatted_tanggal = Carbon::parse($stok->tanggal)
-                        ->locale('id') // Menggunakan bahasa Indonesia
-                        ->translatedFormat('l, d F Y'); // Format: Hari, Tanggal Bulan Tahun
+                        ->locale('id')
+                        ->translatedFormat('l, d F Y');
                     return $stok;
                 });
 
