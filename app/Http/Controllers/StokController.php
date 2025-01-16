@@ -25,7 +25,6 @@ class StokController extends Controller
             $bulan = $request->input('bulan');
             $tanggal = $request->input('tanggal');
 
-            // Query dengan filter
             $stoks = Stok::with('produk')
                 ->when($tahun, function ($query) use ($tahun) {
                     return $query->whereYear('tanggal', $tahun);
