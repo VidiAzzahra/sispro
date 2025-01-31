@@ -17,11 +17,13 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            // mengambil parameter bulan, tahun
             $bulan = $request->bulan;
             $tahun = $request->tahun;
             $startDate = Carbon::create($tahun, $bulan, 1)->startOfMonth();
             $endDate = Carbon::create($tahun, $bulan, 1)->endOfMonth();
 
+            // mengambil data stok tipe masuk
             $dataStokMasuk = Stok::where('tipe', 'masuk')
                 ->whereBetween('tanggal', [$startDate, $endDate])
                 ->groupBy('date')
@@ -34,6 +36,7 @@ class DashboardController extends Controller
                     return [$item->date => $item->total_stok];
                 })->toArray();
 
+            // mengambil data stok tipe keluar
             $dataStokKeluar = Stok::where('tipe', 'keluar')
                 ->whereBetween('tanggal', [$startDate, $endDate])
                 ->groupBy('date')
@@ -50,6 +53,7 @@ class DashboardController extends Controller
             $stokMasuk = [];
             $stokKeluar = [];
 
+            // menghitung jumlah stok masuk dan keluar
             $dates = $startDate->copy();
             while ($dates <= $endDate) {
                 $dateString = $dates->toDateString();
@@ -59,6 +63,7 @@ class DashboardController extends Controller
                 $dates->addDay();
             }
 
+            // mengambalikan respons dan data
             return $this->successResponse([
                 'labels' => $labels,
                 'stokMasuk' => $stokMasuk,
@@ -66,9 +71,11 @@ class DashboardController extends Controller
             ], 'Stok masuk dan keluar ditemukan.');
         }
 
+        // menghitung jumlah kategori dan produk
         $kategori = Kategori::count();
         $produk = Produk::count();
 
+        // mengembalikan view dashboard dengan jumlah kategori dan produk
         return view('pages.dashboard.index', compact('kategori', 'produk'));
     }
 }

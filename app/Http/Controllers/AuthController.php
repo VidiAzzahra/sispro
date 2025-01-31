@@ -44,6 +44,7 @@ class AuthController extends Controller
         return view('pages.auth.login');
     }
 
+
     public function resetPassword(Request $request, $token = null)
     {
         if ($request->isMethod('post')) {

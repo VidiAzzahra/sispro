@@ -24,7 +24,7 @@ class LaporanController extends Controller
         }
         return view('pages.laporan.index');
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
