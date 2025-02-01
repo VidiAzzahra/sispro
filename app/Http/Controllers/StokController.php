@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use DataTables;
-use Carbon\Carbon;
-use App\Models\Stok;
 use App\Models\Produk;
-use Illuminate\Http\Request;
+use App\Models\Stok;
 use App\Traits\JsonResponder;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use DataTables;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class StokController extends Controller
@@ -21,8 +20,8 @@ class StokController extends Controller
     {
         if ($request->ajax()) {
             // Ambil parameter filter
-            $tahun = $request->input('tahun');
-            $bulan = $request->input('bulan');
+            $tahun   = $request->input('tahun');
+            $bulan   = $request->input('bulan');
             $tanggal = $request->input('tanggal');
 
             $stoks = Stok::with('produk')
@@ -43,8 +42,8 @@ class StokController extends Controller
                 })
                 ->addColumn('tipe', function ($stok) {
                     return $stok->tipe == 'masuk'
-                        ? '<span class="badge badge-success">Masuk</span>'
-                        : '<span class="badge badge-danger">Keluar</span>';
+                    ? '<span class="badge badge-success">Masuk</span>'
+                    : '<span class="badge badge-danger">Keluar</span>';
                 })
                 ->addColumn('produk', function ($stok) {
                     return $stok->produk->nama;
@@ -57,19 +56,16 @@ class StokController extends Controller
         return view('pages.stok.index');
     }
 
-
-
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-            'tipe' => 'required|in:masuk,keluar',
-            'produk_id' => 'required|exists:produks,id',
-            'stok' => 'required|numeric',
+            'tanggal'    => 'required|date',
+            'tipe'       => 'required|in:masuk,keluar',
+            'produk_id'  => 'required|exists:produks,id',
+            'stok'       => 'required|numeric',
             'keterangan' => 'nullable',
         ]);
 
@@ -77,16 +73,18 @@ class StokController extends Controller
             return $this->errorResponse($validator->errors(), 'Data tidak valid.', 422);
         }
 
-        $cekStokProduk = Produk::find($request->produk_id);
-        if ($cekStokProduk->stok < $request->stok) {
-            return $this->errorResponse(null, 'Stok Tidak Cukup!');
+        if ($request->tipe == 'keluar') {
+            $cekStokProduk = Produk::find($request->produk_id);
+            if ($cekStokProduk->stok < $request->stok) {
+                return $this->errorResponse(null, 'Stok Tidak Cukup!');
+            }
         }
 
         $stok = Stok::create([
-            'tanggal' => $request->tanggal,
-            'produk_id' => $request->produk_id,
-            'tipe' => $request->tipe,
-            'stok' => $request->stok,
+            'tanggal'    => $request->tanggal,
+            'produk_id'  => $request->produk_id,
+            'tipe'       => $request->tipe,
+            'stok'       => $request->stok,
             'keterangan' => $request->keterangan,
         ]);
 
@@ -99,10 +97,10 @@ class StokController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-            'tipe' => 'required|in:masuk,keluar',
-            'produk_id' => 'required|exists:produks,id',
-            'stok' => 'required|numeric',
+            'tanggal'    => 'required|date',
+            'tipe'       => 'required|in:masuk,keluar',
+            'produk_id'  => 'required|exists:produks,id',
+            'stok'       => 'required|numeric',
             'keterangan' => 'nullable',
         ]);
 
@@ -111,15 +109,15 @@ class StokController extends Controller
         }
         $stok = Stok::find($id);
 
-        if (!$stok) {
+        if (! $stok) {
             return $this->errorResponse(null, 'Data stok Tidak Ada!');
         }
 
         $stok->update([
-            'tanggal' => $request->tanggal,
-            'produk_id' => $request->produk_id,
-            'tipe' => $request->tipe,
-            'stok' => $request->stok,
+            'tanggal'    => $request->tanggal,
+            'produk_id'  => $request->produk_id,
+            'tipe'       => $request->tipe,
+            'stok'       => $request->stok,
             'keterangan' => $request->keterangan,
         ]);
 
@@ -133,7 +131,7 @@ class StokController extends Controller
     {
         $stok = Stok::find($id);
 
-        if (!$stok) {
+        if (! $stok) {
             return $this->errorResponse(null, 'Data stok Tidak Ada!');
         }
 
@@ -148,8 +146,8 @@ class StokController extends Controller
             ob_start();
             return Excel::download(new CategoryExport(), 'Produk' . date('Y-m-d H:i:s') . '.xlsx');
         } elseif ($id == 'pdf') {
-            $tahun = $request->input('tahun');
-            $bulan = $request->input('bulan');
+            $tahun   = $request->input('tahun');
+            $bulan   = $request->input('bulan');
             $tanggal = $request->input('tanggal');
 
             $stoks = Stok::with('produk')
@@ -174,10 +172,10 @@ class StokController extends Controller
             $pdf = PDF::loadView('pages.stok.pdf', compact('stoks'));
 
             $options = [
-                'margin_top' => 20,
-                'margin_right' => 20,
+                'margin_top'    => 20,
+                'margin_right'  => 20,
                 'margin_bottom' => 20,
-                'margin_left' => 20,
+                'margin_left'   => 20,
             ];
 
             $pdf->setOptions($options);
@@ -191,7 +189,7 @@ class StokController extends Controller
         } else {
             $stok = Stok::find($id);
 
-            if (!$stok) {
+            if (! $stok) {
                 return $this->errorResponse(null, 'Data stok tidak ditemukan.', 404);
             }
 
